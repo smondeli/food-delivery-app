@@ -1,1 +1,2 @@
-/restaurant-service/target/
+target/
+.idea/
