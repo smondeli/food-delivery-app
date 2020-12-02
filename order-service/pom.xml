@@ -13,6 +13,7 @@
 
     <properties>
         <dropwizard.version>2.0.15</dropwizard.version>
+        <dropwizard.circuitbreaker>2.0.0</dropwizard.circuitbreaker>
     </properties>
 
     <dependencies>
@@ -21,7 +22,15 @@
             <artifactId>dropwizard-core</artifactId>
             <version>${dropwizard.version}</version>
         </dependency>
+        <dependency>
+            <groupId>io.dropwizard</groupId>
+            <artifactId>dropwizard-auth</artifactId>
+            <version>${dropwizard.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.mtakaki</groupId>
+            <artifactId>dropwizard-circuitbreaker</artifactId>
+            <version>${dropwizard.circuitbreaker}</version>
+        </dependency>
     </dependencies>
-
-
 </project>

@@ -1,5 +1,9 @@
 package resources;
 
+import auth.User;
+import com.github.mtakaki.dropwizard.circuitbreaker.jersey.CircuitBreaker;
+import io.dropwizard.auth.Auth;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.client.ClientBuilder;
@@ -16,27 +20,25 @@ public class OrderResource {
 
     @GET
     @Path("/orders")
-    public Response createOrder(){
+    @CircuitBreaker
+    public Response createOrder(@Auth User user){
         StringBuilder response = new StringBuilder();
-        response.append("-> Received Order request.").append("\n");
-        response.append("-> ")
-                .append(ClientBuilder.newClient()
-                .target(validateConsumerURL)
-                .request().get().readEntity(String.class))
-                .append("\n");
-        response.append("-> ")
-                .append(ClientBuilder.newClient()
-                .target(ticketToCookFoodUrl)
-                .request().get().readEntity(String.class))
-                .append("\n");
-        response.append("-> ")
-                .append(ClientBuilder.newClient()
-                .target(validateCreditCardUrl)
-                .request().get().readEntity(String.class))
-                .append("\n");
+        response.append("-> Received Order request from ").append(user.getName()).append("\n");
+        invokeAPI(response, validateConsumerURL);
+        invokeAPI(response, ticketToCookFoodUrl);
+        invokeAPI(response, validateCreditCardUrl);
         response.append("-> Completed processing order.\n");
         return Response.ok(response.toString(), MediaType.APPLICATION_JSON).build();
     }
+
+    private void invokeAPI(StringBuilder response, String validateConsumerURL) {
+        response.append("-> ")
+                .append(ClientBuilder.newClient()
+                        .target(validateConsumerURL)
+                        .request().get().readEntity(String.class))
+                .append("\n");
+    }
+
     @GET
     @Path("/restaurants/menu")
     public Response getrestaurantMenu(){
