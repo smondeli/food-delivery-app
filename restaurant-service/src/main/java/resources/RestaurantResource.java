@@ -10,6 +10,6 @@ public class RestaurantResource {
     @GET
     @Path("/menu")
     public Response getrRstaurantMenu(){
-        return Response.ok("Received menu from restaurant.", MediaType.APPLICATION_JSON).build();
+        return Response.ok("Received menu from restaurant.\n", MediaType.APPLICATION_JSON).build();
     }
 }

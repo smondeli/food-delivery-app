@@ -1,8 +1,11 @@
 package resources;
 
-import auth.User;
+import auth.BasicUser;
+import auth.OauthUser;
 import com.github.mtakaki.dropwizard.circuitbreaker.jersey.CircuitBreaker;
+import com.github.mtakaki.dropwizard.circuitbreaker.jersey.CircuitBreakerApplicationEventListener;
 import io.dropwizard.auth.Auth;
+import org.eclipse.jetty.server.Server;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -21,7 +24,8 @@ public class OrderResource {
     @GET
     @Path("/orders")
     @CircuitBreaker
-    public Response createOrder(@Auth User user){
+    public Response createOrder(@Auth OauthUser user){
+        CircuitBreakerApplicationEventListener abc;
         StringBuilder response = new StringBuilder();
         response.append("-> Received Order request from ").append(user.getName()).append("\n");
         invokeAPI(response, validateConsumerURL);
@@ -41,7 +45,7 @@ public class OrderResource {
 
     @GET
     @Path("/restaurants/menu")
-    public Response getrestaurantMenu(){
+    public Response getrestaurantMenu(@Auth BasicUser user){
         return ClientBuilder.newClient()
                 .target(restaurantMenuUrl)
                 .request().get();
