@@ -16,6 +16,8 @@ import io.dropwizard.setup.Environment;
 import org.glassfish.jersey.internal.inject.AbstractBinder;
 import resources.OrderResource;
 
+import java.security.Principal;
+
 public class OrderServiceApplication extends Application<OrderServiceConfiguration> {
     private final CircuitBreakerBundle<OrderServiceConfiguration> circuitBreakerBundle = new CircuitBreakerBundle<OrderServiceConfiguration>() {
         @Override
@@ -27,14 +29,14 @@ public class OrderServiceApplication extends Application<OrderServiceConfigurati
     @Override
     public void initialize(final Bootstrap<OrderServiceConfiguration> bootstrap) {
         bootstrap.addBundle(this.circuitBreakerBundle);
-    };
+    }
 
-    public void run(OrderServiceConfiguration configuration, Environment environment) throws Exception {
+    public void run(OrderServiceConfiguration configuration, Environment environment) {
         System.out.println(configuration.getApplicationName());
         // Register Application Resources
         registerResources(environment);
         // Setup Basic Authentication
-        //registerBasicUserAuth(environment);
+//        registerBasicUserAuth(environment);
         // Setup OAuth2 Authentication
         //registerOAuth2UserAuth(environment);
         // Setup Polymorphic Authentication(Basic and OAuth)
@@ -52,7 +54,7 @@ public class OrderServiceApplication extends Application<OrderServiceConfigurati
                 .setAuthenticator(new OrderServiceOAuthAuthenticator())
                 .setPrefix("Bearer")
                 .buildAuthFilter();
-        final PolymorphicAuthDynamicFeature feature = new PolymorphicAuthDynamicFeature<>(
+        final PolymorphicAuthDynamicFeature<Principal> feature = new PolymorphicAuthDynamicFeature<>(
                 ImmutableMap.of(
                         BasicUser.class, basicFilter,
                         OauthUser.class, oauthFilter));

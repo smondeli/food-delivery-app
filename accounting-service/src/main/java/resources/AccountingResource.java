@@ -14,7 +14,7 @@ public class AccountingResource {
     @Path("/validate")
     @CircuitBreaker
     public Response validateCreditCard(){
-        invokeExceptionCode();
+//        invokeExceptionCode();
         return Response.ok("Validated credit card.", MediaType.APPLICATION_JSON).build();
     }
 

@@ -26,7 +26,7 @@ public class OrderResource {
     @GET
     @Path("/orders")
     @CircuitBreaker
-    public Response createOrder(@Auth OauthUser user){
+    public Response createOrder(@Auth BasicUser user){
         StringBuilder response = new StringBuilder();
         response.append("-> Received Order request from ").append(user.getName()).append("\n");
         invokeAPI(response, validateConsumerURL);
