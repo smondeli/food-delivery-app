@@ -1,0 +1,8 @@
+applicationName: order-service
+server:
+  type: simple
+  applicationContextPath: /api
+  adminContextPath: /admin/order
+  connector:
+    type: http
+    port: 8080

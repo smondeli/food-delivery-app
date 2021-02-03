@@ -1,0 +1,8 @@
+applicationName: accounting-service
+server:
+  type: simple
+  applicationContextPath: /api
+  adminContextPath: /admin/accounting
+  connector:
+    type: http
+    port: 8083

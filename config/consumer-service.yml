@@ -1,0 +1,8 @@
+applicationName: consumer-service
+server:
+  type: simple
+  applicationContextPath: /api
+  adminContextPath: /admin/consumer
+  connector:
+    type: http
+    port: 8081

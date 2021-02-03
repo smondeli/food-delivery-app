@@ -1,0 +1,8 @@
+applicationName: restaurant-service
+server:
+  type: simple
+  applicationContextPath: /api
+  adminContextPath: /admin/restaurant
+  connector:
+    type: http
+    port: 8084
